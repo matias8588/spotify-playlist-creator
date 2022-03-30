@@ -23,10 +23,12 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject",
+    "test:coverage": "CI=true npm test -- --env=jsdom --coverage",
     "format:check": "prettier . --ignore-path .gitignore --check",
     "format:fix": "prettier . --ignore-path .gitignore --write",
     "lint": "eslint . --ext .ts --ext .tsx",
     "type:check": "tsc",
+    "validate": "run-p lint type:check format:check",
     "prepare": "husky install",
     "test:ci": "CI=true craco test"
   },
@@ -47,18 +49,15 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "husky": "^7.0.4",
+    "husky": ">=6",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1",
     "typescript": "^4.6.3"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --quiet --cache --fix"
-    ],
-    "*.{json,js,ts,jsx,tsx,html}": [
-      "prettier --write"
-    ]
+    "*.{ts,tsx}": "eslint --cache --fix",
+    "*.{ts,tsx,js,css,md,html}": "prettier --write",
+    "*.{js,css,md}": "prettier --write"
   },
   "browserslist": {
     "production": [
