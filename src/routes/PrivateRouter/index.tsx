@@ -8,10 +8,7 @@ export type ProtectedRouteProps = {
 const ProtectedRoute: FC = ({ children }: ProtectedRouteProps) => {
   const { user }: any = useAuth();
 
-  /* if (loading) {
-    <h1>loading....</h1>;
-  } */
-  console.log(user);
+  console.log({ user });
 
   if (!user) return <Navigate to={"/login"} />;
   return <>{children}</>;

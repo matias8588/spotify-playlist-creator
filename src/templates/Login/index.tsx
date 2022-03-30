@@ -1,24 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/authContext";
+import { useAuth } from "@/context/authContext";
+import HeroImage from "@/components/Hero";
+import { StyledLogin } from "./Styled.Login";
+import imageMusic from "../../assets/music.jpeg";
 
 const Login = () => {
   const { login }: any = useAuth();
-  const navigate = useNavigate();
 
   return (
-    <div>
-      Login
-      <button
-        type="button"
-        onClick={() => {
-          login();
-          return navigate("/");
-        }}
-      >
-        Login
-      </button>
-    </div>
+    <StyledLogin>
+      <HeroImage url={imageMusic}>
+        <h2 className="title-login">Welcome to Spotify</h2>
+        <h3 className="subtitle-login">register to listen to your favorite music </h3>
+
+        <button type="button" className="button-login" onClick={login}>
+          Login
+        </button>
+      </HeroImage>
+    </StyledLogin>
   );
 };
 

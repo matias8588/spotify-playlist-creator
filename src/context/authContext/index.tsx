@@ -1,4 +1,5 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext } from "react";
+import { auth } from "@/utils/getAuth";
 
 export const AuthContext = createContext({});
 
@@ -11,18 +12,25 @@ interface AuthContextProps {
   children?: React.ReactNode;
 }
 
+const clientId = process.env.REACT_APP_CLIENT_ID;
+const host = process.env.REACT_APP_HOST;
+
+const url = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${host}&scope=user-read-private`;
+
 export const AuthProvider = ({ children }: AuthContextProps) => {
-  const [user, setUser] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<object | null>(null);
 
   const login = () => {
-    setUser(true);
-    setLoading(false);
+    window.location.replace(url);
   };
 
-  useEffect(() => {}, []);
+  const getToken = async (token: string) => {
+    if (token) {
+      setUser(await auth(token));
+    }
+  };
 
-  return <AuthContext.Provider value={{ user, loading, login }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, login, getToken }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
