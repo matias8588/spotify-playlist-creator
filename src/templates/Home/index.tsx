@@ -5,9 +5,11 @@ import { useAuth } from "@/context/authContext";
 import { StyledHome } from "./Styled.Home";
 import { getSong } from "@/utils/getSong";
 import Track from "@/components/Track";
+import arrowGo from "@/assets/arrow.svg";
+import logout from "@/assets/logout.svg";
 
 const Home = () => {
-  const { user, getResultsSearch, resultsSearch }: any = useAuth();
+  const { user, getResultsSearch, resultsSearch, playlists }: any = useAuth();
   const navigate = useNavigate();
   const [searchSong, setSearchSong] = useState<string>("");
 
@@ -61,14 +63,34 @@ const Home = () => {
           )}
         </div>
       </div>
-      <div className="wrapper-tracks">
-        {resultsSearch.length > 0 &&
-          resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
-            <Track key={index} {...track} track={track} />
-          ))}
-      </div>
+      <div className="dashboard">
+        <div>
+          <h2>Your Playlists</h2>
+          {playlists &&
+            playlists?.map((track: any, index: number) => (
+              <div key={index} className="button-playlist">
+                <button
+                  className="button-playlist"
+                  onClick={() => navigate(`/playlists/${track?.title}`)}
+                >
+                  {track?.title} <img src={arrowGo} alt="arrow go" />
+                </button>
+              </div>
+            ))}
+        </div>
 
-      <button onClick={handleLogout}>logout</button>
+        <div className="wrapper-tracks">
+          {resultsSearch.length > 0 &&
+            resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
+              <Track key={index} {...track} track={track} />
+            ))}
+        </div>
+      </div>
+      <div className="logout">
+        <button onClick={handleLogout}>
+          <img src={logout} alt="logout" />
+        </button>
+      </div>
     </StyledHome>
   );
 };

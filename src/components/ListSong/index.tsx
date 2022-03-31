@@ -12,12 +12,26 @@ interface ISongListProps {
 }
 
 const SongList = ({ imgUrl, id, externalUrl, releaseDate, title, artist }: ISongListProps) => {
-  const { createPlaylists }: any = useAuth();
+  const { createPlaylists, playlists }: any = useAuth();
 
   const handleSpotify = () => window.open(externalUrl, "_blank");
 
-  const handlePlaylists = () =>
-    createPlaylists([imgUrl, id, externalUrl, releaseDate, title, artist]);
+  const handlePlaylists = () => {
+    if (!playlists[0]?.titlePlaylist) {
+      const title = window.prompt("Write a title for your playlist");
+      return createPlaylists({
+        titlePlaylist: title,
+        imgUrl,
+        id,
+        externalUrl,
+        releaseDate,
+        title,
+        artist,
+      });
+    }
+
+    createPlaylists({ imgUrl, id, externalUrl, releaseDate, title, artist });
+  };
 
   return (
     <StyledSongList>

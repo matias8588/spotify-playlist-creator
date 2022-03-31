@@ -9,9 +9,6 @@ export const StyledHome = styled.div`
     .title-home {
       font-size: 42px;
     }
-    .wrapper-search {
-      margin-top: 100px;
-    }
     .search {
       margin: auto;
       max-width: 350px;
@@ -43,9 +40,33 @@ export const StyledHome = styled.div`
       gap: 2em;
       grid-template-columns: 1fr;
     }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 10% 90%;
+    }
+    .button-playlist {
+      border: none;
+      background-color: transparent;
+      text-transform: capitalize;
+      font-size: 22px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      img {
+        margin-left: 5px;
+      }
+    }
+    .logout {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      cursor: pointer;
+      padding: 10px;
+    }
     @media (min-width: 600px) {
       .wrapper-tracks {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: "200px", 1fr;
       }
     }
     @media (min-width: 990px) {
