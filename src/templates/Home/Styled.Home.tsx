@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const StyledHome = styled.div`
   background-color: #1ed760;
-  height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   && {
     .title-home {
       font-size: 42px;
@@ -33,6 +35,27 @@ export const StyledHome = styled.div`
         font-weight: 700;
         font-size: 20px;
         cursor: pointer;
+      }
+    }
+    .wrapper-tracks {
+      display: grid;
+      margin: auto;
+      gap: 2em;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px) {
+      .wrapper-tracks {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 990px) {
+      .wrapper-tracks {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (min-width: 1200px) {
+      .wrapper-tracks {
+        grid-template-columns: repeat(4, 1fr);
       }
     }
   }

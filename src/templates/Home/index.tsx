@@ -4,9 +4,10 @@ import HeroImage from "@/components/Hero";
 import { useAuth } from "@/context/authContext";
 import { StyledHome } from "./Styled.Home";
 import { getSong } from "@/utils/getSong";
+import Track from "@/components/Track";
 
 const Home = () => {
-  const { getToken, user }: any = useAuth();
+  const { getToken, user, createPlaylists, playlists }: any = useAuth();
   const navigate = useNavigate();
   const [searchSong, setSearchSong] = useState<string>("");
 
@@ -22,8 +23,8 @@ const Home = () => {
           type: "track,artist",
         },
       ];
-      const music = await getSong(params, user.access_token);
-      console.log(music);
+      const response = await getSong(params, user.access_token);
+      createPlaylists(response);
     } catch (error) {
       console.log(error);
     }
@@ -56,6 +57,12 @@ const Home = () => {
           <input type="text" value={searchSong} onChange={(e) => setSearchSong(e.target.value)} />
           <button onClick={HandleSearch}>Search</button>
         </div>
+      </div>
+      <div className="wrapper-tracks">
+        {playlists.length > 0 &&
+          playlists[0]?.tracks?.items?.map((track: any, index: number) => (
+            <Track key={index} {...track} />
+          ))}
       </div>
 
       <button onClick={handleLogout}>logout</button>

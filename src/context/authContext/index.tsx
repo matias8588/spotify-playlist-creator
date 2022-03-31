@@ -19,6 +19,7 @@ const url = `https://accounts.spotify.com/authorize?client_id=${clientId}&respon
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<object | null>(null);
+  const [playlists, setPlaylists] = useState<string[]>([]);
 
   const login = () => {
     window.location.replace(url);
@@ -31,7 +32,15 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }
   };
 
-  return <AuthContext.Provider value={{ user, login, getToken }}>{children}</AuthContext.Provider>;
+  const createPlaylists = (items: any) => {
+    setPlaylists([...playlists, items]);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, getToken, createPlaylists, playlists }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
