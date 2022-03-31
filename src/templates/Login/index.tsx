@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth } from "@/context/authContext";
 import HeroImage from "@/components/Hero";
 import { StyledLogin } from "./Styled.Login";
-import imageMusic from "../../assets/music.jpeg";
-import { useNavigate } from "react-router-dom";
+import imageMusic from "@/assets/music.jpeg";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login }: any = useAuth();
+  const { login, getToken }: any = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const spotifyCode = urlParams.get("code");
+    if (spotifyCode) {
+      getToken(spotifyCode);
+      navigate("/home");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search]);
 
   return (
     <StyledLogin>
@@ -20,7 +31,7 @@ const Login = () => {
           className="button-login"
           onClick={() => {
             login();
-            return navigate("/");
+            return navigate("/home");
           }}
         >
           Login

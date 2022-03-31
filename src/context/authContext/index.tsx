@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { auth } from "@/utils/getAuth";
 
 export const AuthContext = createContext({});
@@ -20,6 +20,7 @@ const url = `https://accounts.spotify.com/authorize?client_id=${clientId}&respon
 export const AuthProvider = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<object | null>(null);
   const [playlists, setPlaylists] = useState<string[]>([]);
+  const [resultsSearch, setResultsSearch] = useState<string[]>([]);
 
   const login = () => {
     window.location.replace(url);
@@ -36,8 +37,16 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     setPlaylists([...playlists, items]);
   };
 
+  const getResultsSearch = (data: any) => {
+    if (!data) return setResultsSearch([]);
+    setResultsSearch([...resultsSearch, data]);
+  };
+  console.log(playlists);
+
   return (
-    <AuthContext.Provider value={{ user, login, getToken, createPlaylists, playlists }}>
+    <AuthContext.Provider
+      value={{ user, login, getToken, createPlaylists, playlists, resultsSearch, getResultsSearch }}
+    >
       {children}
     </AuthContext.Provider>
   );

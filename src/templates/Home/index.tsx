@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HeroImage from "@/components/Hero";
 import { useAuth } from "@/context/authContext";
 import { StyledHome } from "./Styled.Home";
@@ -7,11 +7,9 @@ import { getSong } from "@/utils/getSong";
 import Track from "@/components/Track";
 
 const Home = () => {
-  const { getToken, user, createPlaylists, playlists }: any = useAuth();
+  const { user, getResultsSearch, resultsSearch }: any = useAuth();
   const navigate = useNavigate();
   const [searchSong, setSearchSong] = useState<string>("");
-
-  const location = useLocation();
 
   const HandleSearch = async () => {
     try {
@@ -24,22 +22,20 @@ const Home = () => {
         },
       ];
       const response = await getSong(params, user.access_token);
-      createPlaylists(response);
+      getResultsSearch(response);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const spotifyCode = urlParams.get("code");
-    if (spotifyCode) getToken(spotifyCode);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.search]);
+  const clearSearch = () => {
+    getResultsSearch(null);
+    setSearchSong("");
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -52,16 +48,23 @@ const Home = () => {
         <div style={{ height: "400px" }}></div>
       </HeroImage>
       <div className="wrapper-search">
-        <h2 className="title-home">Search your song</h2>
+        <h2 className="title-home">
+          {resultsSearch.length > 0 ? "Create Playlists" : "Search your song"}
+        </h2>
+
         <div className="search">
           <input type="text" value={searchSong} onChange={(e) => setSearchSong(e.target.value)} />
-          <button onClick={HandleSearch}>Search</button>
+          {resultsSearch.length > 0 ? (
+            <button onClick={clearSearch}>Clear</button>
+          ) : (
+            <button onClick={HandleSearch}>Search</button>
+          )}
         </div>
       </div>
       <div className="wrapper-tracks">
-        {playlists.length > 0 &&
-          playlists[0]?.tracks?.items?.map((track: any, index: number) => (
-            <Track key={index} {...track} />
+        {resultsSearch.length > 0 &&
+          resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
+            <Track key={index} {...track} track={track} />
           ))}
       </div>
 
