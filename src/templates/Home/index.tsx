@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import HeroImage from "../../components/hero-image";
-import { useAuth } from "../../context/authContext";
+import HeroImage from "@/components/Hero";
+import { useAuth } from "@/context/authContext";
 import { StyledHome } from "./Styled.Home";
-import { getSong } from "../../utils/getSong";
+import { getSong } from "@/utils/getSong";
 
 const Home = () => {
   const { getToken, user }: any = useAuth();
@@ -11,7 +11,6 @@ const Home = () => {
   const [searchSong, setSearchSong] = useState<string>("");
 
   const location = useLocation();
-  console.log(user);
 
   const HandleSearch = async () => {
     try {
