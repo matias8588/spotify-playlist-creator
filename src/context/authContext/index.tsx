@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
   const getToken = async (token: string) => {
     if (token) {
+      localStorage.setItem("token", JSON.stringify(token));
       setUser(await auth(token));
     }
   };
