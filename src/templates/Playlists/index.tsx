@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import HeroImage from "@/components/Hero";
-import ListSongs from "@/components/ListSong";
+import ListSongs from "@/components/SongList";
 import { useAuth } from "@/context/authContext";
 import { StyledPlaylists } from "./Styled.Playlists";
 import cover from "@/assets/plane.png";

@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import { useAuth } from "../../context/authContext";
-/* import HeroImage from "../hero-image"; */
+import { useAuth } from "@/context/authContext";
 import { StyledLogin } from "./Styled.Login";
-/* import imageMusic from "../../assets/music.jpg"; */
 import { useLocation, useNavigate } from "react-router-dom";
-import logo from "../../assets/green.svg";
+import logo from "@/assets/green.svg";
 
 const Login = () => {
   const { login, getToken }: any = useAuth();
@@ -18,6 +16,7 @@ const Login = () => {
       getToken(spotifyCode);
       navigate("/create-playlist");
     }
+    // Disabled since only needed to be triggered on location change
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
 

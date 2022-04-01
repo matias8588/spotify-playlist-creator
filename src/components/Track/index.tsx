@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import ListSongs from "../ListSong/index";
+import ListSongs from "@/components/SongList";
 
 export default memo(function Track({
   album,
