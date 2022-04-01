@@ -39,7 +39,9 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
   };
 
   const createPlaylists = (items: any) => {
-    setPlaylists([...playlists, items]);
+    const newPlaylists = playlists.filter((item: any) => item.id !== items.id);
+
+    setPlaylists([...newPlaylists, items]);
   };
 
   const deletePlaylist = (title: string) => {

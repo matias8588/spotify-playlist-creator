@@ -53,11 +53,11 @@ const SongList = ({
         <img src={headphones} alt="hear" />
       </button>
       {!titleList ? (
-        <button className="add-playlists" onClick={handlePlaylists}>
+        <button className="button-playlists" onClick={handlePlaylists}>
           <img src={add} alt="add" />
         </button>
       ) : (
-        <button className="delete-playlists" onClick={() => deleteTrack(id)}>
+        <button className="button-playlists" onClick={() => deleteTrack(id)}>
           <img src={trash} alt="delete song" />
         </button>
       )}

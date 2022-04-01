@@ -18,7 +18,7 @@ export const StyledSongList = styled.div`
       position: relative;
       background-color: #1ed760;
     }
-    .add-playlists {
+    .button-playlists {
       bottom: 70px;
       left: 90px;
       border-radius: 30px;
@@ -31,11 +31,6 @@ export const StyledSongList = styled.div`
     img {
       width: 100%;
       height: auto;
-    }
-    .delete-playlists {
-      bottom: 70px;
-      left: 90px;
-      border-radius: 30px;
     }
   }
 `;

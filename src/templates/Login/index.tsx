@@ -15,7 +15,7 @@ const Login = () => {
     const spotifyCode = urlParams.get("code");
     if (spotifyCode) {
       getToken(spotifyCode);
-      navigate("/home");
+      navigate("/create-playlist");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search]);
@@ -31,7 +31,6 @@ const Login = () => {
           className="button-login"
           onClick={() => {
             login();
-            return navigate("/home");
           }}
         >
           Login
