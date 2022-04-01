@@ -42,6 +42,13 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     setPlaylists([...playlists, items]);
   };
 
+  const deletePlaylist = (title: string) => {
+    console.log(title);
+
+    const newPlaylists = playlists.filter((item: any) => item.titlePlaylists !== title);
+    setPlaylists(newPlaylists);
+  };
+
   const getResultsSearch = (data: any) => {
     if (!data) return setResultsSearch([]);
     setResultsSearch([...resultsSearch, data]);
@@ -59,6 +66,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         getResultsSearch,
         addNewPlaylist,
         titlePlaylist,
+        deletePlaylist,
       }}
     >
       {children}

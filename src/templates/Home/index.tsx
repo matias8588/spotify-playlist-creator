@@ -7,9 +7,11 @@ import Track from "@/components/Track";
 import arrowGo from "@/assets/arrow.svg";
 import logout from "@/assets/logout.svg";
 import CreatePlaylist from "@/components/CreatePlaylist";
+import close from "@/assets/close.svg";
 
 const Home = () => {
-  const { user, getResultsSearch, resultsSearch, playlists, titlePlaylist }: any = useAuth();
+  const { user, getResultsSearch, resultsSearch, playlists, titlePlaylist, deletePlaylist }: any =
+    useAuth();
   const navigate = useNavigate();
   const [searchSong, setSearchSong] = useState<string>("");
 
@@ -70,8 +72,11 @@ const Home = () => {
             <div className="wrapper-titles-playlist">
               {Array.from(titleResult)?.map((item: any, index: number) => (
                 <div key={index} className="button-playlist">
+                  <button className="button-close" onClick={() => deletePlaylist(item)}>
+                    <img src={close} alt="close" />
+                  </button>
                   <button
-                    className="button-playlist"
+                    className="button-go-playlist"
                     onClick={() => navigate(`/playlists/${item}`)}
                   >
                     {item} <img src={arrowGo} alt="arrow go" />
