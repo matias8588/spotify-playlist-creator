@@ -11,7 +11,7 @@ export const StyledSongList = styled.div`
     button {
       cursor: pointer;
       border: 1px solid #fff;
-      padding: 10px 20px;
+      padding: 10px;
       background-color: transparent;
       color: #fff;
       font-weight: 700;
@@ -19,22 +19,23 @@ export const StyledSongList = styled.div`
       background-color: #1ed760;
     }
     .add-playlists {
-      bottom: 56px;
-      left: 65px;
+      bottom: 70px;
+      left: 90px;
       border-radius: 30px;
-      :disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-      }
     }
     .go-spotify {
-      bottom: 56px;
-      right: 65px;
-      border-radius: 30px;
+      bottom: 70px;
+      right: 90px;
+      border-radius: 50%;
     }
     img {
       width: 100%;
       height: auto;
+    }
+    .delete-playlists {
+      bottom: 70px;
+      left: 90px;
+      border-radius: 30px;
     }
   }
 `;

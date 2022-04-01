@@ -54,6 +54,11 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     setResultsSearch([...resultsSearch, data]);
   };
 
+  const deleteSongs = (id: string) => {
+    const newPlaylists = playlists.filter((item: any) => item.id !== id);
+    setPlaylists(newPlaylists);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -67,6 +72,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
         addNewPlaylist,
         titlePlaylist,
         deletePlaylist,
+        deleteSongs,
       }}
     >
       {children}

@@ -1,7 +1,9 @@
 import React from "react";
 import { StyledSongList } from "./Styled.SongList";
-import { useAuth } from "../../context/authContext";
-
+import { useAuth } from "@/context/authContext";
+import trash from "@/assets/trash.svg";
+import headphones from "@/assets/headphones.svg";
+import add from "@/assets/plus.svg";
 interface ISongListProps {
   imgUrl?: string;
   id?: string;
@@ -23,7 +25,7 @@ const SongList = ({
   titlePlaylist,
   titleList,
 }: ISongListProps) => {
-  const { createPlaylists }: any = useAuth();
+  const { createPlaylists, deleteSongs }: any = useAuth();
 
   const handleSpotify = () => window.open(externalUrl, "_blank");
 
@@ -38,7 +40,8 @@ const SongList = ({
       artist,
     });
   };
-  console.log(titleList);
+
+  const deleteTrack = (id: string | undefined) => deleteSongs(id);
 
   return (
     <StyledSongList>
@@ -47,12 +50,17 @@ const SongList = ({
       <p className="artist">{artist}</p>
       <p className="date">{releaseDate}</p>
       <button className="go-spotify" onClick={handleSpotify}>
-        LISTEN
+        <img src={headphones} alt="hear" />
       </button>
-
-      <button className="add-playlists" disabled={!!titleList} onClick={handlePlaylists}>
-        ADD
-      </button>
+      {!titleList ? (
+        <button className="add-playlists" onClick={handlePlaylists}>
+          <img src={add} alt="add" />
+        </button>
+      ) : (
+        <button className="delete-playlists" onClick={() => deleteTrack(id)}>
+          <img src={trash} alt="delete song" />
+        </button>
+      )}
     </StyledSongList>
   );
 };
