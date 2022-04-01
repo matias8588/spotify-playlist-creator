@@ -1,22 +1,25 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import ListSongs from "@/components/ListSong";
 import { useAuth } from "@/context/authContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { StyledPlaylists } from "./Styled.Playlists";
 
 const Playlists = () => {
   const { playlists }: any = useAuth();
+  const { title } = useParams();
   const navigate = useNavigate();
+  const newPlaylist = playlists.filter((item: any) => item.titlePlaylists === title);
 
   return (
-    <div>
-      <div>
-        <h1>{playlists[0]?.titlePlaylist}</h1>
+    <StyledPlaylists>
+      <div className="wrapper-title">
+        <h2>{title}</h2>
         <button onClick={() => navigate("/home")}>BACK</button>
       </div>
 
-      <div>
-        {playlists &&
-          playlists?.map((track: any, index: number) => {
+      <div className="wrapper-list-songs">
+        {newPlaylist &&
+          newPlaylist?.map((track: any, index: number) => {
             return (
               <ListSongs
                 key={index}
@@ -26,11 +29,12 @@ const Playlists = () => {
                 title={track?.title}
                 externalUrl={track?.externalUrl}
                 artist={track?.artist}
+                titleList={title}
               />
             );
           })}
       </div>
-    </div>
+    </StyledPlaylists>
   );
 };
 

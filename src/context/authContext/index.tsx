@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
   const [user, setUser] = useState<object | null>(null);
   const [playlists, setPlaylists] = useState<string[]>([]);
   const [resultsSearch, setResultsSearch] = useState<string[]>([]);
+  const [titlePlaylist, setTitlePlaylist] = useState<string>("");
 
   const login = () => {
     window.location.replace(url);
@@ -33,6 +34,10 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }
   };
 
+  const addNewPlaylist = (title: string) => {
+    setTitlePlaylist(title);
+  };
+
   const createPlaylists = (items: any) => {
     setPlaylists([...playlists, items]);
   };
@@ -41,11 +46,20 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     if (!data) return setResultsSearch([]);
     setResultsSearch([...resultsSearch, data]);
   };
-  console.log(playlists);
 
   return (
     <AuthContext.Provider
-      value={{ user, login, getToken, createPlaylists, playlists, resultsSearch, getResultsSearch }}
+      value={{
+        user,
+        login,
+        getToken,
+        createPlaylists,
+        playlists,
+        resultsSearch,
+        getResultsSearch,
+        addNewPlaylist,
+        titlePlaylist,
+      }}
     >
       {children}
     </AuthContext.Provider>

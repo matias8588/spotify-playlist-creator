@@ -22,6 +22,10 @@ export const StyledSongList = styled.div`
       bottom: 56px;
       left: 65px;
       border-radius: 30px;
+      :disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
     }
     .go-spotify {
       bottom: 56px;

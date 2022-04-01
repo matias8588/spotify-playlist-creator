@@ -53,6 +53,7 @@ export const StyledHome = styled.div`
       cursor: pointer;
       display: flex;
       justify-content: center;
+      margin-left: 10px;
       img {
         margin-left: 5px;
       }
@@ -63,6 +64,31 @@ export const StyledHome = styled.div`
       top: 20px;
       cursor: pointer;
       padding: 10px;
+    }
+    .wrapper-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      h2 {
+        font-size: 32px;
+      }
+      button {
+        height: min-content;
+        margin-left: 20px;
+        border: none;
+        border-radius: 25px;
+        background-color: #000;
+        color: #fff;
+        padding: 10px;
+        font-weight: 800;
+      }
+    }
+    .wrapper-titles-playlist {
+      display: flex;
+      padding: 10px;
+      margin: 10px;
+      border: 2px solid #000;
+      border-radius: 5px;
     }
     @media (min-width: 600px) {
       .wrapper-tracks {

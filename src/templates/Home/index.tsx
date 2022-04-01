@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HeroImage from "@/components/Hero";
 import { useAuth } from "@/context/authContext";
 import { StyledHome } from "./Styled.Home";
 import { getSong } from "@/utils/getSong";
 import Track from "@/components/Track";
 import arrowGo from "@/assets/arrow.svg";
 import logout from "@/assets/logout.svg";
+import CreatePlaylist from "@/components/CreatePlaylist";
 
 const Home = () => {
-  const { user, getResultsSearch, resultsSearch, playlists }: any = useAuth();
+  const { user, getResultsSearch, resultsSearch, playlists, titlePlaylist }: any = useAuth();
   const navigate = useNavigate();
   const [searchSong, setSearchSong] = useState<string>("");
+
+  const titleResult = new Set(playlists.map((item: any) => item.titlePlaylists)) || [];
 
   const HandleSearch = async () => {
     try {
@@ -39,16 +41,12 @@ const Home = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
+  if (playlists?.length === 0 && !titlePlaylist) {
+    return <CreatePlaylist />;
+  }
 
   return (
     <StyledHome>
-      <HeroImage
-        url={
-          "https://enlinea.santotomas.cl/wp-content/uploads/sites/2/2021/03/top-10-los-mejores-sitios-y-aplicaciones-para-conocer-mu%CC%81sica.png"
-        }
-      >
-        <div style={{ height: "400px" }}></div>
-      </HeroImage>
       <div className="wrapper-search">
         <h2 className="title-home">
           {resultsSearch.length > 0 ? "Create Playlists" : "Search your song"}
@@ -62,27 +60,33 @@ const Home = () => {
             <button onClick={HandleSearch}>Search</button>
           )}
         </div>
+        {Array.from(titleResult)?.length > 0 && (
+          <div>
+            <div className="wrapper-title">
+              <h2>Your Playlists</h2>
+              <button onClick={() => navigate("/create-playlist")}>Create New playlist</button>
+            </div>
+
+            <div className="wrapper-titles-playlist">
+              {Array.from(titleResult)?.map((item: any, index: number) => (
+                <div key={index} className="button-playlist">
+                  <button
+                    className="button-playlist"
+                    onClick={() => navigate(`/playlists/${item}`)}
+                  >
+                    {item} <img src={arrowGo} alt="arrow go" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="dashboard">
-        <div>
-          <h2>Your Playlists</h2>
-          {playlists &&
-            playlists?.map((track: any, index: number) => (
-              <div key={index} className="button-playlist">
-                <button
-                  className="button-playlist"
-                  onClick={() => navigate(`/playlists/${track?.title}`)}
-                >
-                  {track?.title} <img src={arrowGo} alt="arrow go" />
-                </button>
-              </div>
-            ))}
-        </div>
-
         <div className="wrapper-tracks">
           {resultsSearch.length > 0 &&
             resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
-              <Track key={index} {...track} track={track} />
+              <Track key={index} {...track} track={track} titlePlaylist={titlePlaylist} />
             ))}
         </div>
       </div>

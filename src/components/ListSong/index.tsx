@@ -9,29 +9,36 @@ interface ISongListProps {
   releaseDate?: string;
   title?: string;
   artist?: string;
+  titlePlaylist?: string;
+  titleList?: string;
 }
 
-const SongList = ({ imgUrl, id, externalUrl, releaseDate, title, artist }: ISongListProps) => {
-  const { createPlaylists, playlists }: any = useAuth();
+const SongList = ({
+  imgUrl,
+  id,
+  externalUrl,
+  releaseDate,
+  title,
+  artist,
+  titlePlaylist,
+  titleList,
+}: ISongListProps) => {
+  const { createPlaylists }: any = useAuth();
 
   const handleSpotify = () => window.open(externalUrl, "_blank");
 
   const handlePlaylists = () => {
-    if (!playlists[0]?.titlePlaylist) {
-      const title = window.prompt("Write a title for your playlist");
-      return createPlaylists({
-        titlePlaylist: title,
-        imgUrl,
-        id,
-        externalUrl,
-        releaseDate,
-        title,
-        artist,
-      });
-    }
-
-    createPlaylists({ imgUrl, id, externalUrl, releaseDate, title, artist });
+    createPlaylists({
+      titlePlaylists: titlePlaylist,
+      imgUrl,
+      id,
+      externalUrl,
+      releaseDate,
+      title,
+      artist,
+    });
   };
+  console.log(titleList);
 
   return (
     <StyledSongList>
@@ -42,7 +49,8 @@ const SongList = ({ imgUrl, id, externalUrl, releaseDate, title, artist }: ISong
       <button className="go-spotify" onClick={handleSpotify}>
         LISTEN
       </button>
-      <button className="add-playlists" onClick={handlePlaylists}>
+
+      <button className="add-playlists" disabled={!!titleList} onClick={handlePlaylists}>
         ADD
       </button>
     </StyledSongList>
