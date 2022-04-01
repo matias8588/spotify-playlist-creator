@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { useAuth } from "@/context/authContext";
-import HeroImage from "@/components/Hero";
+import { useAuth } from "../../context/authContext";
+/* import HeroImage from "../hero-image"; */
 import { StyledLogin } from "./Styled.Login";
-import imageMusic from "@/assets/music.jpeg";
+/* import imageMusic from "../../assets/music.jpg"; */
 import { useLocation, useNavigate } from "react-router-dom";
+import logo from "../../assets/green.svg";
 
 const Login = () => {
   const { login, getToken }: any = useAuth();
@@ -22,20 +23,23 @@ const Login = () => {
 
   return (
     <StyledLogin>
-      <HeroImage url={imageMusic}>
-        <h2 className="title-login">Welcome to Spotify</h2>
-        <h3 className="subtitle-login">register to listen to your favorite music </h3>
-
-        <button
-          type="button"
-          className="button-login"
-          onClick={() => {
-            login();
-          }}
-        >
-          Login
-        </button>
-      </HeroImage>
+      <div className="wrapper">
+        <div>
+          <img src={logo} alt="logo" className="img-logo" />
+        </div>
+        <h3 className="subtitle-login">Register to listen to your favorite music </h3>
+        <div>
+          <button
+            type="button"
+            className="button-login"
+            onClick={() => {
+              login();
+            }}
+          >
+            Login
+          </button>
+        </div>
+      </div>
     </StyledLogin>
   );
 };

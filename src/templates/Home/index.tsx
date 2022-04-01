@@ -8,6 +8,8 @@ import arrowGo from "@/assets/arrow.svg";
 import logout from "@/assets/logout.svg";
 import CreatePlaylist from "@/components/CreatePlaylist";
 import close from "@/assets/close.svg";
+import HeroImage from "@/components/Hero";
+import coverSearch from "@/assets/plane2.png";
 
 const Home = () => {
   const { user, getResultsSearch, resultsSearch, playlists, titlePlaylist, deletePlaylist }: any =
@@ -48,59 +50,63 @@ const Home = () => {
   }
 
   return (
-    <StyledHome>
-      <div className="wrapper-search">
-        <h2 className="title-home">
-          {resultsSearch.length > 0 ? "Create Playlists" : "Search your song"}
-        </h2>
+    <HeroImage url={coverSearch}>
+      <StyledHome>
+        <div className="wrapper-search">
+          <h2 className="title-home">
+            {resultsSearch.length > 0 ? "Create Playlists" : "Search Your Song"}
+          </h2>
 
-        <div className="search">
-          <input type="text" value={searchSong} onChange={(e) => setSearchSong(e.target.value)} />
-          {resultsSearch.length > 0 ? (
-            <button onClick={clearSearch}>Clear</button>
-          ) : (
-            <button onClick={HandleSearch}>Search</button>
+          <div className="search">
+            <input type="text" value={searchSong} onChange={(e) => setSearchSong(e.target.value)} />
+            {resultsSearch.length > 0 ? (
+              <button onClick={clearSearch}>Clear</button>
+            ) : (
+              <button disabled={!searchSong} onClick={HandleSearch}>
+                Search
+              </button>
+            )}
+          </div>
+          {Array.from(titleResult)?.length > 0 && (
+            <div className="wrapper-playlist">
+              <div className="wrapper-title">
+                <h2>Your Playlists</h2>
+                <button onClick={() => navigate("/create-playlist")}>Create New playlist</button>
+              </div>
+
+              <div className="wrapper-titles-playlist">
+                {Array.from(titleResult)?.map((item: any, index: number) => (
+                  <div key={index} className="button-playlist">
+                    <button className="button-close" onClick={() => deletePlaylist(item)}>
+                      <img src={close} alt="close" />
+                    </button>
+                    <button
+                      className="button-go-playlist"
+                      onClick={() => navigate(`/playlists/${item}`)}
+                    >
+                      {item} <img src={arrowGo} alt="arrow go" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
-        {Array.from(titleResult)?.length > 0 && (
-          <div>
-            <div className="wrapper-title">
-              <h2>Your Playlists</h2>
-              <button onClick={() => navigate("/create-playlist")}>Create New playlist</button>
-            </div>
-
-            <div className="wrapper-titles-playlist">
-              {Array.from(titleResult)?.map((item: any, index: number) => (
-                <div key={index} className="button-playlist">
-                  <button className="button-close" onClick={() => deletePlaylist(item)}>
-                    <img src={close} alt="close" />
-                  </button>
-                  <button
-                    className="button-go-playlist"
-                    onClick={() => navigate(`/playlists/${item}`)}
-                  >
-                    {item} <img src={arrowGo} alt="arrow go" />
-                  </button>
-                </div>
+        <div className="dashboard">
+          <div className="wrapper-tracks">
+            {resultsSearch.length > 0 &&
+              resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
+                <Track key={index} {...track} track={track} titlePlaylist={titlePlaylist} />
               ))}
-            </div>
           </div>
-        )}
-      </div>
-      <div className="dashboard">
-        <div className="wrapper-tracks">
-          {resultsSearch.length > 0 &&
-            resultsSearch[0]?.tracks?.items?.map((track: any, index: number) => (
-              <Track key={index} {...track} track={track} titlePlaylist={titlePlaylist} />
-            ))}
         </div>
-      </div>
-      <div className="logout">
-        <button onClick={handleLogout}>
-          <img src={logout} alt="logout" />
-        </button>
-      </div>
-    </StyledHome>
+        <div className="logout">
+          <button onClick={handleLogout}>
+            <img src={logout} alt="logout" />
+          </button>
+        </div>
+      </StyledHome>
+    </HeroImage>
   );
 };
 
