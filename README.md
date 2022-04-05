@@ -6,6 +6,10 @@ Using the public API from Spotify, I've built a playlists generator. So, the use
 
 ![image](./src/assets/demo.gif)
 
+## Live preview
+
+<https://gentle-genie-83447a.netlify.app>
+
 ## Tech Stack
 
 -   React: UI library to build reusable components
